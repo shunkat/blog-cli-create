@@ -79,17 +79,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de"
 
 [[package]]
-name = "blog-cli"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "clap",
- "dialoguer",
- "serde",
- "serde_json",
-]
-
-[[package]]
 name = "bumpalo"
 version = "3.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -185,6 +174,17 @@ name = "core-foundation-sys"
 version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "06ea2b9bc92be3c2baa9334a323ebca2d6f074ff852cd1d7b11064035cd3868f"
+
+[[package]]
+name = "create"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "clap",
+ "dialoguer",
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "dialoguer"

@@ -35,7 +35,9 @@ fn main() {
     let category = categories[category_index].to_string();
 
     // 3. ファイル作成
-    let file_path = Path::new(&category).join(format!("{}.md", &slug));
+    let contents_dir = Path::new("../contents");
+    let file_path = contents_dir.join(&category).join(format!("{}.md", &slug));
+
     if let Some(parent) = file_path.parent() {
         create_dir_all(parent).expect("Failed to create directory");
     }
