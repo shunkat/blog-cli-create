@@ -1,8 +1,8 @@
 use clap::{Arg, Command};
 use dialoguer::{Input, Select};
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
-use std::fs::{create_dir_all, File, OpenOptions};
+use chrono::{Local};
+use std::fs::{create_dir_all, File};
 use std::io::Write;
 use std::path::Path;
 
@@ -35,27 +35,29 @@ fn main() {
     let category = categories[category_index].to_string();
 
     // 3. ファイル作成
-    let file_path = Path::new(&category).join(&slug);
+    let file_path = Path::new(&category).join(format!("{}.md", &slug));
     if let Some(parent) = file_path.parent() {
         create_dir_all(parent).expect("Failed to create directory");
     }
-    File::create(&file_path).expect("Failed to create file");
+    let mut file = File::create(&file_path).expect("Failed to create file");
 
-    // 4. DB (JSON) 更新
-    let new_entry = DbEntry { category, slug };
-    let mut data: Value = serde_json::from_str(
-        &std::fs::read_to_string("db.json").unwrap_or_else(|_| "[]".to_string()),
-    )
-    .unwrap_or_default();
-    if let Some(arr) = data.as_array_mut() {
-        arr.push(json!(new_entry));
-    }
-    let mut file = OpenOptions::new()
-        .write(true)
-        .create(true)
-        .truncate(true)
-        .open("db.json")
-        .expect("Failed to open db.json");
-    file.write_all(serde_json::to_string_pretty(&data).unwrap().as_bytes())
-        .expect("Failed to write to db.json");
+    // 現在時刻を取得
+    let now = Local::now();  // chrono::Localを使用
+
+    // フロントマターの追加
+    let front_matter = format!(
+        r#"+++
+title = ""
+date = {}
+draft = true
+summary = ""
+emoji = ""
+tags = []
++++
+"#,
+        now.format("%Y-%m-%dT%H:%M:%S%:z")
+    );
+
+    file.write_all(front_matter.as_bytes())
+        .expect("Failed to write front matter");
 }
