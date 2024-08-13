@@ -5,6 +5,7 @@ use chrono::{Local};
 use std::fs::{create_dir_all, File};
 use std::io::Write;
 use std::path::Path;
+use ulid::Ulid;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct DbEntry {
@@ -46,17 +47,25 @@ fn main() {
     // 現在時刻を取得
     let now = Local::now();  // chrono::Localを使用
 
+    // UUIDを生成
+    let ulid = Ulid::new();
+    let id = ulid.to_string();
+
     // フロントマターの追加
     let front_matter = format!(
         r#"+++
+id = "{}"
 title = ""
-date = {}
+date = "{}"
 draft = true
 summary = ""
 emoji = ""
 tags = []
+previous = ""
+after = ""
 +++
 "#,
+        id,
         now.format("%Y-%m-%dT%H:%M:%S%:z")
     );
 
