@@ -61,10 +61,6 @@ draft = true
 summary = ""
 emoji = ""
 tags = []
-preurl = ""
-pretitle = ""
-afturl = ""
-afttitle = ""
 +++
 "#,
         id,
