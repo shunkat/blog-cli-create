@@ -26,7 +26,7 @@ fn main() {
         .cloned()
         .unwrap_or_else(|| Input::<String>::new().with_prompt("Slug:").interact().unwrap());
 
-    let categories = vec!["kotlin", "flutter", "entrance", "gadget", "others"];
+    let categories = vec!["kotlin", "flutter", "entrance", "gadget", "other"];
     let category_index = Select::new()
         .with_prompt("Category:")
         .items(&categories)
@@ -61,14 +61,14 @@ draft = true
 summary = ""
 emoji = ""
 tags = []
-preurl = ""
-pretitle = ""
-afturl = ""
-afttitle = ""
+category = "{}"
+slug = "{}"
 +++
 "#,
-        id,
-        now.format("%Y-%m-%dT%H:%M:%S%:z")
+        id, 
+        now.format("%Y-%m-%dT%H:%M:%S%:z"),
+        category,
+        slug,
     );
 
     file.write_all(front_matter.as_bytes())
