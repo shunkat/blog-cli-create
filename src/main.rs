@@ -26,7 +26,7 @@ fn main() {
         .cloned()
         .unwrap_or_else(|| Input::<String>::new().with_prompt("Slug:").interact().unwrap());
 
-    let categories = vec!["kotlin", "flutter", "entrance", "gadget", "other"];
+    let categories = vec!["book", "flutter", "entrance", "ai", "other"];
     let category_index = Select::new()
         .with_prompt("Category:")
         .items(&categories)
